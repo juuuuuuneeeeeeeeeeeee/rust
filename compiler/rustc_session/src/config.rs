@@ -116,6 +116,9 @@ pub enum CFProtection {
 
     /// Emit control-flow protection for both branches and returns.
     Full,
+
+    /// Emit fineibt control-flow protection for both branches and returns
+    Fine,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, Hash, HashStable_Generic)]

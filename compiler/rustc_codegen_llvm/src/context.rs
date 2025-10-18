@@ -435,6 +435,19 @@ pub(crate) unsafe fn create_module<'ll>(
         );
     }
 
+    if let CFProtection::Fine = sess.opts.unstable_opts.cf_protection {
+        if tcx.sess.target.arch != "x86_64" {
+            tcx.sess.warn("`-Z cf-protection=fine` is unsupported for this target; ignoring.");
+        } else {
+            llvm::add_module_flag_u32(
+                llmod,
+                llvm::ModuleFlagMergeBehavior::Override,
+                "cf-protection-fine",
+                1,
+            );
+        } 
+    } 
+
     if sess.opts.unstable_opts.virtual_function_elimination {
         llvm::add_module_flag_u32(
             llmod,
