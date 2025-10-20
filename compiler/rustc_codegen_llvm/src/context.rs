@@ -437,7 +437,7 @@ pub(crate) unsafe fn create_module<'ll>(
 
     if let CFProtection::Fine = sess.opts.unstable_opts.cf_protection {
         if tcx.sess.target.arch != "x86_64" {
-            continue; // TODO: add error message later
+            // Tadd error message later
             //tcx.sess.dcx().emit_err(errors::);
             // "`-Z cf-protection=fine` is unsupported for this target; ignoring."
         } else {
