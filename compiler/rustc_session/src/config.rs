@@ -1637,6 +1637,7 @@ pub struct BranchProtection {
     pub bti: bool,
     pub pac_ret: Option<PacRet>,
     pub gcs: bool,
+    pub bti_fine: bool,
 }
 
 pub(crate) const fn default_lib_output() -> CrateType {

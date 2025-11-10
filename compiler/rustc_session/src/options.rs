@@ -1892,6 +1892,10 @@ pub mod parse {
                 for opt in s.split(',') {
                     match opt {
                         "bti" => slot.bti = true,
+                        "fine" => {
+                            slot.bti = true;
+                            slot.fine_bit = true;
+                        }
                         "pac-ret" if slot.pac_ret.is_none() => {
                             slot.pac_ret = Some(PacRet { leaf: false, pc: false, key: PAuthKey::A })
                         }
