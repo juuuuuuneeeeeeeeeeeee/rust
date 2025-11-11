@@ -21,7 +21,7 @@ use crate::attributes::body::CoroutineParser;
 use crate::attributes::codegen_attrs::{
     ColdParser, CoverageParser, ExportNameParser, ForceTargetFeatureParser, NakedParser,
     NoMangleParser, ObjcClassParser, ObjcSelectorParser, OptimizeParser, SanitizeParser,
-    TargetFeatureParser, TrackCallerParser, UsedParser,
+    TargetFeatureParser, TrackCallerParser, UsedParser, CoarseCfParser,
 };
 use crate::attributes::confusables::ConfusablesParser;
 use crate::attributes::crate_level::{
@@ -210,6 +210,7 @@ attribute_parsers!(
         Single<WithoutArgs<AllowInternalUnsafeParser>>,
         Single<WithoutArgs<AsPtrParser>>,
         Single<WithoutArgs<AutomaticallyDerivedParser>>,
+        Single<WithoutArgs<CoarseCfParser>>,
         Single<WithoutArgs<CoinductiveParser>>,
         Single<WithoutArgs<ColdParser>>,
         Single<WithoutArgs<ConstContinueParser>>,

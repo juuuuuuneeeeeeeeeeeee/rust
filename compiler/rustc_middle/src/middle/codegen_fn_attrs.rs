@@ -166,6 +166,8 @@ bitflags::bitflags! {
         const NO_BUILTINS               = 1 << 15;
         /// Marks foreign items, to make `contains_extern_indicator` cheaper.
         const FOREIGN_ITEM              = 1 << 16;
+        /// Marks wether coarse bti instrumentation should be enforced for this specific function
+        const COARSE_CF_CHECK           = 1 << 17;
     }
 }
 rustc_data_structures::external_bitflags_debug! { CodegenFnAttrFlags }

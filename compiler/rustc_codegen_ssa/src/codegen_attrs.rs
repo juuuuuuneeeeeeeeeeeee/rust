@@ -310,6 +310,9 @@ fn process_builtin_attrs(
                 AttributeKind::ObjcSelector { methname, .. } => {
                     codegen_fn_attrs.objc_selector = Some(*methname);
                 }
+                AttributeKind::CoarseCfCheckAttr(_) => {
+                    codegen_fn_attrs.flags |= CodegenFnAttrFlags::COARSE_CF_CHECK;
+                }
                 _ => {}
             }
         }

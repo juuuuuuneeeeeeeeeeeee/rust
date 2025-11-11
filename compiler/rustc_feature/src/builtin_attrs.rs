@@ -1194,6 +1194,13 @@ pub static BUILTIN_ATTRIBUTES: &[BuiltinAttribute] = &[
         template!(Word, List: &["feat1, feat2, ..."]), DuplicatesOk, EncodeCrossCrate::No,
         "rustc_allow_const_fn_unstable side-steps feature gating and stability checks"
     ),
+    gated!(
+        coarsecf_check, Normal,
+        template!(Workd),
+        WarnFollowing,
+        EncodeCrossCrate::Yes,
+        experimental!(coarsecf_check)
+    ),
 
     // ==========================================================================
     // Internal attributes, Layout related:
