@@ -245,6 +245,7 @@ enum class LLVMRustAttributeKind {
   DeadOnUnwind = 43,
   DeadOnReturn = 44,
   CapturesReadOnly = 45,
+  CoarseCfCheck = 46,
 };
 
 static Attribute::AttrKind fromRust(LLVMRustAttributeKind Kind) {
@@ -340,6 +341,8 @@ static Attribute::AttrKind fromRust(LLVMRustAttributeKind Kind) {
   case LLVMRustAttributeKind::CapturesAddress:
   case LLVMRustAttributeKind::CapturesReadOnly:
     report_fatal_error("Should be handled separately");
+  case LLVMRustAttribueKind::CoarseCfCheck:
+    return Attribute::CoarseCfCheck;
   }
   report_fatal_error("bad LLVMRustAttributeKind");
 }
@@ -1757,6 +1760,7 @@ FIXED_MD_KIND(MD_DIAssignID, 38)
 FIXED_MD_KIND(MD_coro_outside_frame, 39)
 FIXED_MD_KIND(MD_mmra, 40)
 FIXED_MD_KIND(MD_noalias_addrspace, 41)
+FIXED_MD_KIND(MD_finebti_type, 42)
 // If some fixed metadata kinds are not present and consistent in all supported
 // LLVM versions, it's fine to omit them from this list; in that case Rust-side
 // code cannot declare them as fixed IDs and must look them up by name instead.

@@ -211,6 +211,25 @@ impl<'ll, 'tcx> CodegenCx<'ll, 'tcx> {
             }
         }
 
+        if self.tcx.sess.unstable_opts.branch_protection == BranchProtection::fine_bti && self.tcx.sess.target.arch == "aarch64" {
+            // LLVM KCFI does not support multiple !kcfi_type attachments
+            let mut options = kcfi::TypeIdOptions::empty();
+            if self.tcx.sess.is_sanitizer_cfi_generalize_pointers_enabled() {
+                options.insert(kcfi::TypeIdOptions::GENERALIZE_POINTERS);
+            }
+            if self.tcx.sess.is_sanitizer_cfi_normalize_integers_enabled() {
+                options.insert(kcfi::TypeIdOptions::NORMALIZE_INTEGERS);
+            }
+
+            if let Some(instance) = instance {
+                let finebti_typeid = kcfi::typeid_for_instance(self.tcx, instance, options);
+                self.set_finebti_type_metadata(llfn, finebti_typeid);
+            } else {
+                let finebti_typeid = kcfi::typeid_for_fnabi(self.tcx, fn_abi, options);
+                self.set_finebti_type_metadata(llfn, finebti_typeid);
+            }
+        }
+
         llfn
     }
 }

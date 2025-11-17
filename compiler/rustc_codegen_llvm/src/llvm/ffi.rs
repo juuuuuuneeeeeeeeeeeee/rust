@@ -289,6 +289,7 @@ pub(crate) enum AttributeKind {
     DeadOnUnwind = 43,
     DeadOnReturn = 44,
     CapturesReadOnly = 45,
+    CoarseCfCheck = 46,
 }
 
 /// LLVMIntPredicate
