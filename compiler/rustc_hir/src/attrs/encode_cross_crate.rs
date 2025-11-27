@@ -26,6 +26,7 @@ impl AttributeKind {
             AsPtr(..) => Yes,
             AutomaticallyDerived(..) => Yes,
             BodyStability { .. } => No,
+            CoarseCfCheckAttr(..) => Yes,
             Coinductive(..) => No,
             Cold(..) => No,
             Confusables { .. } => Yes,
