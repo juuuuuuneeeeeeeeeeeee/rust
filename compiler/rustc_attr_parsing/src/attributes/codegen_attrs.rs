@@ -680,7 +680,6 @@ impl<S: Stage> SingleAttributeParser<S> for SanitizeParser {
 pub(crate) struct CoarseCfParser;
 impl<S: Stage> NoArgsAttributeParser<S> for CoarseCfParser {
     const PATH: &[Symbol] = &[sym::coarsecf_check];
-    const ATTRIBUTE_ORDER: AttributeOrder = AttributeOrder::KeepOutermost;
     const ON_DUPLICATE: OnDuplicate<S> = OnDuplicate::Warn;
     const ALLOWED_TARGETS: AllowedTargets = AllowedTargets::AllowList(&[
         Allow(Target::Fn)
