@@ -325,12 +325,12 @@ impl<'ll, 'tcx> TypeMembershipCodegenMethods<'tcx> for CodegenCx<'ll, 'tcx> {
     }
 
     fn add_finebti_type_metadata(&self, function: &'ll Value, finebti_typeid: u32) {
-        let finebti_type_metada = [llvm::LLVMValueAsMetadata(self.const_u32(finebti_typeid))];
+        let finebti_type_metadata = [llvm::LLVMValueAsMetadata(self.const_u32(finebti_typeid))];
         self.global_add_metadata_node(function, llvm::MD_finebti_type, &finebti_type_metadata);
     }
 
     fn set_finebti_type_metadata(&self, function: &'ll Value, finebti_typeid: u32) {
-        let finebti_type_metada = [llvm::LLVMValueAsMetadata(self.const_u32(finebti_typeid))];
+        let finebti_type_metadata = [llvm::LLVMValueAsMetadata(self.const_u32(finebti_typeid))];
         self.global_set_metadata_node(function, llvm::MD_finebti_type, &finebti_type_metadata);
     }
 }

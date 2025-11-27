@@ -211,7 +211,7 @@ impl<'ll, 'tcx> CodegenCx<'ll, 'tcx> {
             }
         }
 
-        if self.tcx.sess.unstable_opts.branch_protection == BranchProtection::fine_bti && self.tcx.sess.target.arch == "aarch64" {
+        if self.tcx.sess.opts.unstable_opts.branch_protection == BranchProtection::fine_bti && self.tcx.sess.target.arch == "aarch64" {
             // LLVM KCFI does not support multiple !kcfi_type attachments
             let mut options = kcfi::TypeIdOptions::empty();
             if self.tcx.sess.is_sanitizer_cfi_generalize_pointers_enabled() {
