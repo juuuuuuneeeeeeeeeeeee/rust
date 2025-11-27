@@ -774,6 +774,7 @@ fn test_unstable_options_tracking_hash() {
             bti: true,
             pac_ret: Some(PacRet { leaf: true, pc: true, key: PAuthKey::B }),
             gcs: true,
+            fine_bti: true,
         })
     );
     tracked!(codegen_backend, Some("abc".to_string()));

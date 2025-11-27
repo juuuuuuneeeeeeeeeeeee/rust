@@ -1894,7 +1894,7 @@ pub mod parse {
                         "bti" => slot.bti = true,
                         "fine" => {
                             slot.bti = true;
-                            slot.fine_bit = true;
+                            slot.fine_bti = true;
                         }
                         "pac-ret" if slot.pac_ret.is_none() => {
                             slot.pac_ret = Some(PacRet { leaf: false, pc: false, key: PAuthKey::A })

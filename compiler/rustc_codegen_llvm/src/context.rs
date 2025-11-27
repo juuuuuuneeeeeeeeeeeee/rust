@@ -369,7 +369,7 @@ pub(crate) unsafe fn create_module<'ll>(
         );
     }
 
-    if let Some(BranchProtection { bti, pac_ret, gcs, fine }) = sess.opts.unstable_opts.branch_protection
+    if let Some(BranchProtection { bti, pac_ret, gcs, fine_bti}) = sess.opts.unstable_opts.branch_protection
     {
         if sess.target.arch == "aarch64" {
             llvm::add_module_flag_u32(
