@@ -341,7 +341,7 @@ static Attribute::AttrKind fromRust(LLVMRustAttributeKind Kind) {
   case LLVMRustAttributeKind::CapturesAddress:
   case LLVMRustAttributeKind::CapturesReadOnly:
     report_fatal_error("Should be handled separately");
-  case LLVMRustAttribueKind::CoarseCfCheck:
+  case LLVMRustAttributeKind::CoarseCfCheck:
     return Attribute::CoarseCfCheck;
   }
   report_fatal_error("bad LLVMRustAttributeKind");
