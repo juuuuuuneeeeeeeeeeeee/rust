@@ -1196,7 +1196,7 @@ pub static BUILTIN_ATTRIBUTES: &[BuiltinAttribute] = &[
     ),
     gated!(
         coarsecf_check, Normal,
-        template!(Workd),
+        template!(Word),
         WarnFollowing,
         EncodeCrossCrate::Yes,
         experimental!(coarsecf_check)
