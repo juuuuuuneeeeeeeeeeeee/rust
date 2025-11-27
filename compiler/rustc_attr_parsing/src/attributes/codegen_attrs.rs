@@ -1,4 +1,4 @@
-use rustc_hir::attrs::{CoverageAttrKind, OptimizeAttr, SanitizerSet, UsedBy, CoarseCfCheckAttr};
+use rustc_hir::attrs::{CoverageAttrKind, OptimizeAttr, SanitizerSet, UsedBy};
 use rustc_session::parse::feature_err;
 
 use super::prelude::*;
@@ -682,7 +682,7 @@ impl<S: Stage> NoArgsAttributeParser<S> for CoarseCfParser {
     const PATH: &[Symbol] = &[sym::coarsecf_check];
     const ATTRIBUTE_ORDER: AttributeOrder = AttributeOrder::KeepOutermost;
     const ON_DUPLICATE: OnDuplicate<S> = OnDuplicate::Warn;
-    const ALLOWED_TARGETS: AllowedTargets = AllowedTargets:AllowList(&[
+    const ALLOWED_TARGETS: AllowedTargets = AllowedTargets::AllowList(&[
         Allow(Target::Fn)
     ]);
 
