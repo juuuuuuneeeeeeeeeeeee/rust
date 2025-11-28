@@ -812,7 +812,7 @@ mod desc {
     pub(crate) const parse_sanitizer_memory_track_origins: &str = "0, 1, or 2";
     pub(crate) const parse_cfguard: &str =
         "either a boolean (`yes`, `no`, `on`, `off`, etc), `checks`, or `nochecks`";
-    pub(crate) const parse_cfprotection: &str = "`none`|`no`|`n` (default), `branch`, `return`, `fine` or `full`|`yes`|`y` (equivalent to `branch` and `return`)";
+    pub(crate) const parse_cfprotection: &str = "`none`|`no`|`n` (default), `branch`, `return` or `full`|`yes`|`y` (equivalent to `branch` and `return`)";
     pub(crate) const parse_debuginfo: &str = "either an integer (0, 1, 2), `none`, `line-directives-only`, `line-tables-only`, `limited`, or `full`";
     pub(crate) const parse_debuginfo_compression: &str = "one of `none`, `zlib`, or `zstd`";
     pub(crate) const parse_mir_strip_debuginfo: &str =
@@ -1323,7 +1323,6 @@ pub mod parse {
             Some("branch") => CFProtection::Branch,
             Some("return") => CFProtection::Return,
             Some("full") => CFProtection::Full,
-            Some("fine") => CFProtection::Fine,
             Some(_) => return false,
         };
         true
