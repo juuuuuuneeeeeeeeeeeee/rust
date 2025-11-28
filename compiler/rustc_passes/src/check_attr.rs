@@ -283,6 +283,7 @@ impl<'tcx> CheckAttrVisitor<'tcx> {
                     | AttributeKind::ObjcSelector { .. }
                     | AttributeKind::RustcCoherenceIsCore(..)
                     | AttributeKind::DebuggerVisualizer(..)
+                    | AttributeKind::CoarseCfCheck(_)
                 ) => { /* do nothing  */ }
                 Attribute::Unparsed(attr_item) => {
                     style = Some(attr_item.style);
@@ -2248,6 +2249,8 @@ impl<'tcx> CheckAttrVisitor<'tcx> {
             MirDialect::Runtime => {}
         }
     }
+
+    fn check_coarsecf_attr()
 }
 
 impl<'tcx> Visitor<'tcx> for CheckAttrVisitor<'tcx> {
