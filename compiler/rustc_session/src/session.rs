@@ -40,7 +40,7 @@ use rustc_target::spec::{
 use crate::code_stats::CodeStats;
 pub use crate::code_stats::{DataTypeKind, FieldInfo, FieldKind, SizeKind, VariantInfo};
 use crate::config::{
-    self, CoverageLevel, CoverageOptions, CrateType, DebugInfo, ErrorOutputType, FunctionReturn,
+    self, BranchProtection, CoverageLevel, CoverageOptions, CrateType, DebugInfo, ErrorOutputType, FunctionReturn,
     Input, InstrumentCoverage, OptLevel, OutFileName, OutputType, RemapPathScopeComponents,
     SwitchWithOptPath,
 };
@@ -361,10 +361,7 @@ impl Session {
     }
 
     pub fn is_fine_branch_protection_enabled(&self) -> bool {
-        matches!(
-            self.opts.unstable_opts.branch_protection,
-            Some(BranchProtection { fine_bti: true, .. })
-        )   
+        self.target.arch == "aarch64" && matches!(self.opts.unstable_opts.branch_protection, Some(BranchProtection { fine_bti: true, .. }))   
     }
 
     /// Check whether this compile session and crate type use static crt.
