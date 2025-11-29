@@ -463,7 +463,7 @@ pub enum AttributeKind {
         span: Span,
     },
 
-    /// Represents '#[coarsecf_check]'.
+    /// Represents `#[coarsecf_check]`.
     CoarseCfCheckAttr(Span),
 
     /// Represents `#[rustc_coinductive]`.
