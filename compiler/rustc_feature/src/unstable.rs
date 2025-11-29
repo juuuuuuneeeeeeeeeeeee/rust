@@ -278,13 +278,13 @@ declare_features! (
     (unstable, box_patterns, "1.0.0", Some(29641)),
     /// Allows builtin # foo() syntax
     (internal, builtin_syntax, "1.71.0", Some(110680)),
+    /// Allows using 'coarsecf_check' attribute
+    (unstable, coarsecf_check, "1.85.0", None),
     /// Allows `#[doc(notable_trait)]`.
     /// Renamed from `doc_spotlight`.
     (unstable, doc_notable_trait, "1.52.0", Some(45040)),
     /// Allows using the `may_dangle` attribute (RFC 1327).
     (unstable, dropck_eyepatch, "1.10.0", Some(34761)),
-    /// Allows using 'coarsecf_check' attribute
-    (unstable, coarsecf_check, "1.85.0", None),
     /// Allows using the `#[fundamental]` attribute.
     (unstable, fundamental, "1.0.0", Some(29635)),
     /// Allows using `#[link_name="llvm.*"]`.
