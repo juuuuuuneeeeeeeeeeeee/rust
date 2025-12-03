@@ -693,7 +693,7 @@ impl<'a> Linker for GccLinker<'a> {
         // --gc-sections drops the size of hello world from 1.8MB to 597K, a 67%
         // reduction.
         } else if (self.is_gnu || self.sess.target.is_like_wasm) && !keep_metadata {
-            self.link_arg("--gc-sections");
+            //self.link_arg("--gc-sections");
         }
     }
 
@@ -1385,7 +1385,7 @@ impl<'a> Linker for WasmLd<'a> {
     fn no_relro(&mut self) {}
 
     fn gc_sections(&mut self, _keep_metadata: bool) {
-        self.link_arg("--gc-sections");
+        //self.link_arg("--gc-sections");
     }
 
     fn optimize(&mut self) {
@@ -1529,7 +1529,7 @@ impl<'a> Linker for L4Bender<'a> {
 
     fn gc_sections(&mut self, keep_metadata: bool) {
         if !keep_metadata {
-            self.link_arg("--gc-sections");
+            //self.link_arg("--gc-sections");
         }
     }
 
