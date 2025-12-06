@@ -427,11 +427,12 @@ impl<'a, 'll, 'tcx> BuilderMethods<'a, 'tcx> for Builder<'a, 'll, 'tcx> {
         if let Some(kcfi_bundle) = kcfi_bundle.as_ref().map(|b| b.as_ref()) {
             bundles.push(kcfi_bundle);
         }
-
-        let finebti_expected_bundle = self.finebti_expected_operand_bundle(fn_attrs, fn_abi, instance, llfn);
-        if let Some(finebti_expected_bundle) = finebti_expected_bundle.as_ref().map(|b| b.as_ref()) {
-            bundles.push(finebti_expected_bundle);
-        }
+        
+        // TODO: Comment out once Rust linking problem solved 
+        // let finebti_expected_bundle = self.finebti_expected_operand_bundle(fn_attrs, fn_abi, instance, llfn);
+        // if let Some(finebti_expected_bundle) = finebti_expected_bundle.as_ref().map(|b| b.as_ref()) {
+        //     bundles.push(finebti_expected_bundle);
+        // }
 
         let invoke = unsafe {
             llvm::LLVMBuildInvokeWithOperandBundles(
@@ -1407,10 +1408,11 @@ impl<'a, 'll, 'tcx> BuilderMethods<'a, 'tcx> for Builder<'a, 'll, 'tcx> {
             bundles.push(kcfi_bundle);
         }
 
-        let finebti_expected_bundle = self.finebti_expected_operand_bundle(fn_attrs, fn_abi, instance, llfn);
-        if let Some(finebti_expected_bundle) = finebti_expected_bundle.as_ref().map(|b| b.as_ref()) {
-            bundles.push(finebti_expected_bundle);
-        }
+        // TODO: Comment out once Rust linking problem solved 
+        // let finebti_expected_bundle = self.finebti_expected_operand_bundle(fn_attrs, fn_abi, instance, llfn);
+        // if let Some(finebti_expected_bundle) = finebti_expected_bundle.as_ref().map(|b| b.as_ref()) {
+        //     bundles.push(finebti_expected_bundle);
+        // }
 
         let call = unsafe {
             llvm::LLVMBuildCallWithOperandBundles(
@@ -1778,10 +1780,11 @@ impl<'a, 'll, 'tcx> Builder<'a, 'll, 'tcx> {
             bundles.push(kcfi_bundle);
         }
 
-        let finebti_expected_bundle = self.finebti_expected_operand_bundle(fn_attrs, fn_abi, instance, llfn);
-        if let Some(finebti_expected_bundle) = finebti_expected_bundle.as_ref().map(|b| b.as_ref()) {
-            bundles.push(finebti_expected_bundle);
-        }
+        // TODO: Comment out once Rust linking problem solved 
+        // let finebti_expected_bundle = self.finebti_expected_operand_bundle(fn_attrs, fn_abi, instance, llfn);
+        // if let Some(finebti_expected_bundle) = finebti_expected_bundle.as_ref().map(|b| b.as_ref()) {
+        //     bundles.push(finebti_expected_bundle);
+        // }
 
         let callbr = unsafe {
             llvm::LLVMBuildCallBr(
@@ -1902,33 +1905,34 @@ impl<'a, 'll, 'tcx> Builder<'a, 'll, 'tcx> {
         kcfi_bundle
     }
 
+    // TODO: Comment out once Rust linking problem solved 
     // Emits FineBTI operand bundles using KCFI hashes.
-    fn finebti_expected_operand_bundle(
-        &mut self,
-        fn_attrs: Option<&CodegenFnAttrs>,
-        fn_abi: Option<&FnAbi<'tcx, Ty<'tcx>>>,
-        instance: Option<Instance<'tcx>>,
-        llfn: &'ll Value,
-    ) -> Option<llvm::OperandBundleBox<'ll>> {
-        let is_indirect_call = unsafe { llvm::LLVMRustIsNonGVFunctionPointerTy(llfn) };
-        let finebti_expected_bundle = if self.tcx.sess.is_fine_branch_protection_enabled()
-            && let Some(fn_abi) = fn_abi
-            && is_indirect_call
-        {
-            let mut options = kcfi::TypeIdOptions::empty();
+    // fn finebti_expected_operand_bundle(
+    //     &mut self,
+    //     fn_attrs: Option<&CodegenFnAttrs>,
+    //     fn_abi: Option<&FnAbi<'tcx, Ty<'tcx>>>,
+    //     instance: Option<Instance<'tcx>>,
+    //     llfn: &'ll Value,
+    // ) -> Option<llvm::OperandBundleBox<'ll>> {
+    //     let is_indirect_call = unsafe { llvm::LLVMRustIsNonGVFunctionPointerTy(llfn) };
+    //     let finebti_expected_bundle = if self.tcx.sess.is_fine_branch_protection_enabled()
+    //         && let Some(fn_abi) = fn_abi
+    //         && is_indirect_call
+    //     {
+    //         let mut options = kcfi::TypeIdOptions::empty();
 
-            let finebti_typeid = if let Some(instance) = instance {
-                kcfi::typeid_for_instance(self.tcx, instance, options)
-            } else {
-                kcfi::typeid_for_fnabi(self.tcx, fn_abi, options)
-            };
+    //         let finebti_typeid = if let Some(instance) = instance {
+    //             kcfi::typeid_for_instance(self.tcx, instance, options)
+    //         } else {
+    //             kcfi::typeid_for_fnabi(self.tcx, fn_abi, options)
+    //         };
 
-            Some(llvm::OperandBundleBox::new("finebti_expected", &[self.const_u32(finebti_typeid)]))
-        } else {
-            None
-        };
-        finebti_expected_bundle
-    }
+    //         Some(llvm::OperandBundleBox::new("finebti_expected", &[self.const_u32(finebti_typeid)]))
+    //     } else {
+    //         None
+    //     };
+    //     finebti_expected_bundle
+    // }
 
     /// Emits a call to `llvm.instrprof.increment`. Used by coverage instrumentation.
     #[instrument(level = "debug", skip(self))]
