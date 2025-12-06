@@ -214,12 +214,6 @@ impl<'ll, 'tcx> CodegenCx<'ll, 'tcx> {
         if self.tcx.sess.is_fine_branch_protection_enabled() {
             // LLVM KCFI does not support multiple !kcfi_type attachments
             let mut options = kcfi::TypeIdOptions::empty();
-            if self.tcx.sess.is_sanitizer_cfi_generalize_pointers_enabled() {
-                options.insert(kcfi::TypeIdOptions::GENERALIZE_POINTERS);
-            }
-            if self.tcx.sess.is_sanitizer_cfi_normalize_integers_enabled() {
-                options.insert(kcfi::TypeIdOptions::NORMALIZE_INTEGERS);
-            }
 
             if let Some(instance) = instance {
                 let finebti_typeid = kcfi::typeid_for_instance(self.tcx, instance, options);
