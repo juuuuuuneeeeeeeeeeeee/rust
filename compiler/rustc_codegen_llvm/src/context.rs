@@ -408,8 +408,9 @@ pub(crate) unsafe fn create_module<'ll>(
                 llvm::ModuleFlagMergeBehavior::Min,
                 "guarded-control-stack",
                 gcs.into(),
-            );
-            llvm::add_module_flag_u32(
+            ); 
+            // BTIFine: we propagate the parsed 'fine' option to the LLVM backend for the CodeGen phase
+            llvm::add_module_flag_u32( 
                 llmod,
                 llvm::ModuleFlagMergeBehavior::Min,
                 "branch-target-enforcement-fine",

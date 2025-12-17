@@ -676,12 +676,12 @@ impl<S: Stage> SingleAttributeParser<S> for SanitizeParser {
         Some(AttributeKind::Sanitize { on_set, off_set, span: cx.attr_span })
     }
 }
-
+// BTIFine: we create a parser for our custom coarsecf_check attribute that will only take attributes of the form #[coarsecf_check] and only allows this attribute to be attached to functions
 pub(crate) struct CoarseCfParser;
 impl<S: Stage> NoArgsAttributeParser<S> for CoarseCfParser {
     const PATH: &[Symbol] = &[sym::coarsecf_check];
     const ON_DUPLICATE: OnDuplicate<S> = OnDuplicate::Warn;
-    const ALLOWED_TARGETS: AllowedTargets = AllowedTargets::AllowList(&[
+    const ALLOWED_TARGETS: AllowedTargets = AllowedTargets::AllowList(&[ 
         Allow(Target::Fn)
     ]);
 

@@ -324,6 +324,9 @@ impl<'ll, 'tcx> TypeMembershipCodegenMethods<'tcx> for CodegenCx<'ll, 'tcx> {
         self.global_set_metadata_node(function, llvm::MD_kcfi_type, &kcfi_type_metadata);
     }
 
+    // BTIFine: we implement the functions that will compute our SIDs almost exactly like kCFI but with 
+    // the difference that we emit our own custom metadata labels. These metadata lables must have the same names
+    // as in LLVM (Section 5.1.2 and Section 5.2.2)
     fn add_finebti_type_metadata(&self, function: &'ll Value, finebti_typeid: u32) {
         let finebti_type_metadata = [llvm::LLVMValueAsMetadata(self.const_u32(finebti_typeid))];
         self.global_add_metadata_node(function, llvm::MD_finebti_type, &finebti_type_metadata);

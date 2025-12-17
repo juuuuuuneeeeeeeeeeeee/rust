@@ -210,7 +210,7 @@ impl<'ll, 'tcx> CodegenCx<'ll, 'tcx> {
                 self.set_kcfi_type_metadata(llfn, kcfi_typeid);
             }
         }
-
+        // BTIFine: When lowering a function that has fine-grained protection enabled, we attach its prototype SID as function metadata (Section 5.2.2)
         // TODO: Comment out once Rust linking problem solved 
         // if self.tcx.sess.is_fine_branch_protection_enabled() {
         //     // LLVM KCFI does not support multiple !kcfi_type attachments

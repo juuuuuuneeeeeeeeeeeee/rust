@@ -1891,7 +1891,7 @@ pub mod parse {
                 for opt in s.split(',') {
                     match opt {
                         "bti" => slot.bti = true,
-                        "fine" => {
+                        "fine" => { // BTIFine: If we parse the 'fine' option we want to set vanilla bti as well (Section 5.2.1)
                             slot.bti = true;
                             slot.fine_bti = true;
                         }

@@ -1634,7 +1634,9 @@ pub struct BranchProtection {
     pub bti: bool,
     pub pac_ret: Option<PacRet>,
     pub gcs: bool,
-    pub fine_bti: bool,
+    pub fine_bti: bool, 
+    // BTIFine: we add a new field to this struct that is equivalent to Clang's ParsedBranchProtection 
+    // struct and allows us to track whether we've set the 'fine' option or not (Section 5.2.1)
 }
 
 pub(crate) const fn default_lib_output() -> CrateType {

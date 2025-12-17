@@ -1194,6 +1194,7 @@ pub static BUILTIN_ATTRIBUTES: &[BuiltinAttribute] = &[
         template!(Word, List: &["feat1, feat2, ..."]), DuplicatesOk, EncodeCrossCrate::No,
         "rustc_allow_const_fn_unstable side-steps feature gating and stability checks"
     ),
+    // BTIFine: We gate our custom attribute to ensure that it can only be used with Nightly Rust
     gated!(
         coarsecf_check, Normal,
         template!(Word),
