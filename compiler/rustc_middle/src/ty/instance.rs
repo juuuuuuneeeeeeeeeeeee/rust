@@ -611,7 +611,7 @@ impl<'tcx> Instance<'tcx> {
                     debug!(" => fn pointer created for virtual call");
                     resolved.def = InstanceKind::ReifyShim(def_id, reason);
                 }
-                _ if tcx.sess.is_sanitizer_kcfi_enabled() => {
+                _ if tcx.sess.is_sanitizer_kcfi_enabled() || tcx.sess.is_fine_branch_protection_enabled() => {
                     // Reify `::call`-like method implementations
                     if tcx.is_closure_like(resolved.def_id()) {
                         // Reroute through a reify via the *unresolved* instance. The resolved one can't
@@ -656,7 +656,10 @@ impl<'tcx> Instance<'tcx> {
 
         let mut resolved = Instance::expect_resolve(tcx, typing_env, def_id, args, span);
 
-        let reason = tcx.sess.is_sanitizer_kcfi_enabled().then_some(ReifyReason::Vtable);
+        let cfi_protection_enabled = tcx.sess.is_sanitizer_kcfi_enabled()
+            || tcx.sess.is_fine_branch_protection_enabled();
+
+        let reason = cfi_protection_enabled.then_some(ReifyReason::Vtable);
         match resolved.def {
             InstanceKind::Item(def) => {
                 // We need to generate a shim when we cannot guarantee that

@@ -1409,7 +1409,7 @@ impl<'a, 'll, 'tcx> BuilderMethods<'a, 'tcx> for Builder<'a, 'll, 'tcx> {
         }
 
         // Emit FineBTI operand bundle
-        let finebti_expected_bundle = self.finebti_expected_operand_bundle(fn_attrs, fn_abi, instance, llfn);
+        let finebti_expected_bundle = self.finebti_expected_operand_bundle(fn_call_attrs, fn_abi, instance, llfn);
         if let Some(finebti_expected_bundle) = finebti_expected_bundle.as_ref().map(|b| b.as_ref()) {
             bundles.push(finebti_expected_bundle);
         }
@@ -1914,11 +1914,14 @@ impl<'a, 'll, 'tcx> Builder<'a, 'll, 'tcx> {
         llfn: &'ll Value,
     ) -> Option<llvm::OperandBundleBox<'ll>> {
         let is_indirect_call = unsafe { llvm::LLVMRustIsNonGVFunctionPointerTy(llfn) };
-        let finebti_expected_bundle = if self.tcx.sess.is_fine_branch_protection_enabled()
-            && let Some(fn_abi) = fn_abi
+        let finebti_expected_bundle = if self.tcx.sess.is_fine_branch_protection_enabled() // check whether fine-grained instrumentation is enabled
+            && let Some(fn_abi) = fn_abi 
             && is_indirect_call
         {
-            let mut options = kcfi::TypeIdOptions::empty();
+            let mut options = kcfi::TypeIdOptions::empty(); 
+            if self.tcx.sess.is_sanitizer_cfi_normalize_integers_enabled() { // we only consider integer normalization to keep it equivalent to the logic inside LLVM's FineBTI implementation
+                options.insert(kcfi::TypeIdOptions::NORMALIZE_INTEGERS);
+            }
 
             let finebti_typeid = if let Some(instance) = instance {
                 kcfi::typeid_for_instance(self.tcx, instance, options)

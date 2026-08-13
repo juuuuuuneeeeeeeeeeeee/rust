@@ -212,18 +212,21 @@ impl<'ll, 'tcx> CodegenCx<'ll, 'tcx> {
         }
         // BTIFine: When lowering a function that has fine-grained protection enabled, we attach its prototype SID as function metadata (Section 5.2.2)
         // TODO: Comment out once Rust linking problem solved 
-        // if self.tcx.sess.is_fine_branch_protection_enabled() {
-        //     // LLVM KCFI does not support multiple !kcfi_type attachments
-        //     let mut options = kcfi::TypeIdOptions::empty();
-
-        //     if let Some(instance) = instance {
-        //         let finebti_typeid = kcfi::typeid_for_instance(self.tcx, instance, options);
-        //         self.set_finebti_type_metadata(llfn, finebti_typeid);
-        //     } else {
-        //         let finebti_typeid = kcfi::typeid_for_fnabi(self.tcx, fn_abi, options);
-        //         self.set_finebti_type_metadata(llfn, finebti_typeid);
-        //     }
-        // }
+        if self.tcx.sess.is_fine_branch_protection_enabled() {
+            // LLVM KCFI does not support multiple !kcfi_type attachments
+            let mut options = kcfi::TypeIdOptions::empty();
+            if self.tcx.sess.is_sanitizer_cfi_normalize_integers_enabled() {
+                options.insert(kcfi::TypeIdOptions::NORMALIZE_INTEGERS);
+            }
+            
+            if let Some(instance) = instance {
+                let finebti_typeid = kcfi::typeid_for_instance(self.tcx, instance, options);
+                self.set_finebti_type_metadata(llfn, finebti_typeid);
+            } else {
+                let finebti_typeid = kcfi::typeid_for_fnabi(self.tcx, fn_abi, options);
+                self.set_finebti_type_metadata(llfn, finebti_typeid);
+            }
+        }
 
         llfn
     }
